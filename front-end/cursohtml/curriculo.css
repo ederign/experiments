@@ -1,0 +1,24 @@
+#conteudo {
+    font-family: Helvetica, Arial;
+    width:940px;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+h2 {
+    background-color: #5599DD;
+    color: #DDDDDD;
+    padding:5px
+}
+
+.exp {
+    text-indent: 50px
+}
+
+#email {
+    text-decoration: underline;
+    font-style: italic;
+}
+#header{
+    text-align: center;
+}
