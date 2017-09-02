@@ -18,9 +18,9 @@ public class WatcherTest {
 
         Path path = Paths.get("/tmp");
 
-        path.register(
-                watchService,
-                StandardWatchEventKinds.ENTRY_CREATE);
+//        WatchKey register = path.register(
+//                watchService,
+//                StandardWatchEventKinds.ENTRY_CREATE);
 
         WatchKey key;
         while ((key = watchService.take()) != null) {
