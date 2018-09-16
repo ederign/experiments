@@ -1,18 +1,18 @@
-var tree;
+let tree;
 
 function setup() {
-	// createCanvas(windowWidth, windowHeight);
-	noCanvas();
+	createCanvas(600, 400);
+	background(51);
+	tree = new Tree(floor(random(0, 10)));
   generateTreeValues();
 	
-	tree.traverse();
+	tree.draw();
 	console.log(tree.search(1));
 }
 
 function generateTreeValues(){
-	tree = new Tree(floor(random(0, 10)));
 	for(let i = 0; i < 10; i++){
-		tree.addValue(floor(random(0, 20)));
+		tree.addValue(floor(random(0, 100)));
 	}
 }
 

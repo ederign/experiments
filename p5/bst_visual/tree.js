@@ -1,23 +1,23 @@
-class Tree{
+class Tree {
 
-  constructor(value){
-    this.root = new Node(value);
+  constructor(value) {
+    this.root = new Node(value, width / 2, 30);
   }
 
-  addValue(value){
+  addValue(value) {
     this.root.addNode(new Node(value));
   }
 
-  search(value){
-    if(this.root.getValue()===value){
-      return true;
+  search(value) {
+    if (this.root.getValue() === value) {
+      return root;
     }
-    else{
+    else {
       return this.root.search(value);
     }
   }
 
-  traverse(){
+  draw() {
     this.root.visit();
   }
 }
