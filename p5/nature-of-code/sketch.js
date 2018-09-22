@@ -1,13 +1,22 @@
 let w;
+let r;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	w = new Walker();
+	//walker
+	// w = new Walker();
+	//random distribution
+	r = new RandomDistribution(20);
 
 }
 
 function draw() {
-	background(51);
-	w.update();
-	w.display(this.x, this.y);
+
+	//walker
+	// background(51);
+	// w.update();
+	// w.display(this.x, this.y);
+
+	r.update();
+
 }
