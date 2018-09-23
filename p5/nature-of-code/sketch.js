@@ -1,22 +1,21 @@
-let w;
-let r;
+let obj;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	//walker
-	// w = new Walker();
+	// obj = new Walker();
+	
 	//random distribution
-	r = new RandomDistribution(20);
+	// obj = new RandomDistribution(20);
 
+	//gaussian distribution
+	// obj = new GaussianDistribution();
 }
 
 function draw() {
 
-	//walker
-	// background(51);
-	// w.update();
-	// w.display(this.x, this.y);
-
-	r.update();
+	if(obj){
+		obj.update();
+	}
 
 }

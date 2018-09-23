@@ -8,8 +8,12 @@ class Walker {
   }
 
   update() {
+    background(51);
+
     this.vel.add(this.acc);
     this.pos.add(this.vel);
+    
+    w.display(this.x, this.y);
   }
 
   display() {
