@@ -4,7 +4,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
 
     //walker
-    // obj = new Walker();
+    obj = new Walker();
 
     //random distribution
     // obj = new RandomDistribution(20);
@@ -16,7 +16,7 @@ function setup() {
     // obj = new PerlinNoiseWalker();
 
     //2dperlin noise Walker.js
-    obj = new TwoDPerlinNoiseWalker();
+    // obj = new TwoDPerlinNoiseWalker();
 
 
 }
