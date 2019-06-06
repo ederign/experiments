@@ -1,6 +1,6 @@
 # Prerequisites
 *.d
-
+*tutorial*
 # Object files
 *.o
 *.ko
