@@ -10,7 +10,6 @@ int main(int argc, char *argv[])
   
   printf("%d \n", *t);
   printf("%d \n", **t1);
-
   int tarray[] = {31337, 31338};
   int *tarray1 = tarray;
   printf("%d \n", *tarray1);
