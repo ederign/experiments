@@ -16,14 +16,26 @@ function setup() {
     dropdown1 = createSelect(''); 
     resultP = createP();
 
+    let titles = data.titles; 
+    for (let i = 0; i < titles.length; i++) {
+        let div = createDiv(titles[i])
+        let dropdown = createSelect('');
+        dropdown.parent(div);
+
+        for (let star = 1; star < 6; star++) {
+            dropdown.option(star);
+        }
+    }
+
     for (let i = 0; i < data.users.length; i++) {
-        const name = data.users[i].name;
+        const name = data.users[i].name; 
         dropdown1.option(name);
         users[name] = data.users[i];
     }
     var button = createButton('submit');
     button.mousePressed(findNearestNeighbors);
 }
+
 function findNearestNeighbors(){
 
     for (let index = 0; index < resultDivs.length; index++) {
