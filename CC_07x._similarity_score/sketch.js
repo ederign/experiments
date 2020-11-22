@@ -4,6 +4,7 @@ let resultP;
 const users = {};
 let similarityScores = {}
 let resultDivs = [];
+var dropdowns = [];
 
 
 function preload() {
@@ -20,7 +21,10 @@ function setup() {
     for (let i = 0; i < titles.length; i++) {
         let div = createDiv(titles[i])
         let dropdown = createSelect('');
+        dropdown.option('not seen');
+        dropdown.title = titles[i];
         dropdown.parent(div);
+        dropdowns.push(dropdown);
 
         for (let star = 1; star < 6; star++) {
             dropdown.option(star);
@@ -33,10 +37,24 @@ function setup() {
         users[name] = data.users[i];
     }
     var button = createButton('submit');
-    button.mousePressed(findNearestNeighbors);
+    button.mousePressed(predictRatings);
 }
 
-function findNearestNeighbors(){
+function predictRatings(){
+    const newUser  = {};
+    for (let i = 0; i < dropdowns.length; i++) {
+        const title = dropdowns[i].title;
+        let rating = dropdowns[i].value();
+        if(rating == 'not seen'){
+            rating = null;
+        }
+        newUser[title] = rating;
+    }
+
+    findNearestNeighbors(newUser)
+}
+
+function findNearestNeighbors(newUser){
 
     for (let index = 0; index < resultDivs.length; index++) {
         const div = resultDivs[index];
@@ -48,23 +66,45 @@ function findNearestNeighbors(){
 
     similarityScores = {};
     for (let index = 0; index < data.users.length; index++) {
-        const other = data.users[index].name;
-        if(other != name){
-            let similarity = euclideanDistance(name, other)
-            similarityScores[other] = similarity;
-            data.users[index].similarityScore = similarity;
-        } else{
-            similarityScores[other] = -1;
-            data.users[index].similarityScore = -1;
-        }
+        const other = data.users[index];
+        let similarity = euclideanDistance(newUser, other)
+        similarityScores[other.name] = similarity;
+        data.users[index].similarityScore = similarity;
     }
     data.users.sort(compareSimilarity);
     
-    for (let i = 0; i < 5; i++) {
-        let div = createDiv(data.users[i].name + ': ' + data.users[i].similarityScore);
-        resultP.parent(div);
-        resultDivs.push(div);
+
+    for (let i = 0; i < data.titles.length; i++) {
+        const title = data.titles[i];
+        if(newUser[title] == null){
+            // const div = createDiv(title); 
+            // resultDivs.push(div);
+            // div.parent(resultP);
+
+            const k = 5;
+            let weightedSum = 0;
+            let similaritySum = 0;
+            for (let i = 0; i < k; i++) {
+                let name = data.users[i].name;
+                const sim = data.users[i].similarityScore;
+                let ratings = data.users[k];
+                var rating = ratings[title];
+                if(rating != null){
+                    weightedSum += rating*sim;
+                    similaritySum += sim;
+                }
+              
+            }
+            let stars = nf(weightedSum/similaritySum, 1, 2);
+
+
+
+            let div = createDiv(title + ': ' + stars);
+            resultDivs.push(div);
+            div.parent(resultP);
+        }  
     }
+
 }
 
 function compareSimilarity(a, b){
@@ -73,14 +113,9 @@ function compareSimilarity(a, b){
     return score2 - score1;
 }
 
-function euclideanDistance(name1, name2) {
-    const ratings1 = users[name1];
-    const ratings2 = users[name2];
+function euclideanDistance(ratings1, ratings2) {
 
-    const titles = Object.keys(ratings1);
-
-    titles.splice(titles.indexOf('name'), 1);
-    titles.splice(titles.indexOf('timestamp'), 1);
+    const titles = data.titles;
 
     let sumSquares = 0;
  
