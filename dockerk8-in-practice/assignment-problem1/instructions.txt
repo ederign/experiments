@@ -5,14 +5,21 @@ HINT: Have a brief look at the app code to configure your images correctly!
 
 2) Launch a container for each created image, making sure, 
 that the app inside the container works correctly and is usable.
+docker run -p 80:3000  image
+
 
 3) Re-create both containers and assign names to both containers.
 Use these names to stop and restart both containers.
+docker run --name node_assign -p 80:3000 image
 
 4) Clean up (remove) all stopped (and running) containers, 
 clean up all created images.
+docker container prune
+docker rmi image
 
 5) Re-build the images - this time with names and tags assigned to them.
+docker build -t nodeapp:v1 .
 
 6) Run new containers based on the re-built images, ensuring that the containers
 are removed automatically when stopped.
+docker run --name nodeassign2 -p 80:3000 nodeapp:v1
