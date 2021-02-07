@@ -1,4 +1,6 @@
 //@ts-check
+/** @typedef { import('./types.d').ShipStorage } ShipStorage */
+/** @typedef { import('./types.d').StorageItem } StorageItem */
 const storage = {
   max: undefined,
   items: [],
@@ -19,9 +21,18 @@ function storageUsed() {
   return currentStorage;
 }
 
+/**
+ * 
+ * @param {StorageItem} item 
+ */
 function add(item) {
   if (storage.max - item.weight >= storageUsed()) {
     storage.items.push(item);
     currentStorage += item.weight;
+  }
+  if(isDevelopment) {
+    const itemCount = storage.items.length;
+    console.log(`${itemCount} items`);
+    console.log(`${currentStorage} kg total`)
   }
 }
