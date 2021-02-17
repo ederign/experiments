@@ -1,34 +1,58 @@
 import React, { Component } from "react";
 import "./App.css";
 import Person from "./Person/Person";
+import Validation from "./Validation/Validation";
+import Char from "./Char/Char";
 
 class App extends Component {
   state = {
     persons: [
-      { name: "Eder", age: 10 },
-      { name: "Ana", age: 11 },
-      { name: "Dora", age: 12 },
+      { id: "fsdfsd", name: "Eder", age: 10 },
+      { id: "fdfdsvcx", name: "Ana", age: 11 },
+      { id: "vxcvxce", name: "Dora", age: 12 },
     ],
     otherState: "some other value",
+    showPersons: false,
+    userInput: "",
   };
 
-  switchNameHandler = (n) => {
+  deletePersonHandler = (index) => {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({ persons: persons });
+  };
+
+  deleteCharHandler = (index) => {
+    const inputs = [...this.state.userInput.split("")];
+    inputs.splice(index, 1);
+    this.setState({ userInput: inputs.join("") });
+  };
+
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex((p) => {
+      return p.id === id;
+    });
+    const person = {
+      ...this.state.persons[personIndex],
+    };
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-        { name: n, age: 1 },
-        { name: "Ana Ana", age: 2 },
-        { name: "Dora", age: 3 },
-      ],
+      persons: persons,
     });
   };
 
-  nameChangedHandler = (e) => {
+  tooglePersonsHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState({ showPersons: !doesShow });
+  };
+
+  inputChanged = (e) => {
     this.setState({
-      persons: [
-        { name: e.target.value, age: 1 },
-        { name: "Ana", age: 2 },
-        { name: "Dora", age: 3 },
-      ],
+      userInput: e.target.value,
     });
   };
 
@@ -40,28 +64,52 @@ class App extends Component {
       padding: "8px",
       cursor: "pointer",
     };
+
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = (
+        <div>
+          {this.state.persons.map((p, index) => {
+            return (
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={p.name}
+                age={p.age}
+                key={p.id}
+                changed={(event) => this.nameChangedHandler(event, p.id)}
+              />
+            );
+          })}
+        </div>
+      );
+    }
+    let charList = this.state.userInput.split("").map((c, index) => {
+      return (
+        <Char
+          click={() => this.deleteCharHandler(index)}
+          key={index}
+          letter={c}
+        />
+      );
+    });
+
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <button style={style} onClick={() => this.switchNameHandler("Bebezin")}>
-          Switch Name
+        <div>
+          <Validation inputLength={this.state.userInput.length} />
+          <input
+            type="text"
+            value={this.state.userInput}
+            onChange={this.inputChanged}
+          />
+          <p>{this.state.userInput}</p>
+          <p>{this.state.userInput.length}</p>
+          {charList}
+        </div>
+        <button style={style} onClick={() => this.tooglePersonsHandler()}>
+          Show Persons
         </button>
-        <Person
-          changed={this.nameChangedHandler}
-          click={this.switchNameHandler.bind(this, "Ysfd")}
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age}
-        />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-        >
-          My Hobbies: Racing
-        </Person>
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age}
-        />
+        {persons}
       </div>
     );
   }
