@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./App.css";
+import classes from "./App.css";
 import Person from "./Person/Person";
 import Validation from "./Validation/Validation";
 import Char from "./Char/Char";
@@ -86,16 +86,16 @@ class App extends Component {
       );
     });
 
-    const classes = [];
+    const assignedClasses = [];
     if (this.state.persons.length <= 2) {
-      classes.push("red");
+      assignedClasses.push(classes.red);
     }
     if (this.state.persons.length <= 1) {
-      classes.push("bold");
+      assignedClasses.push(classes.bold);
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <div>
           <Validation inputLength={this.state.userInput.length} />
           <input
@@ -103,12 +103,15 @@ class App extends Component {
             value={this.state.userInput}
             onChange={this.inputChanged}
           />
-          <p className={classes.join(" ")}> This is really working </p>
+          <p className={assignedClasses.join(" ")}> This is really working </p>
           <p>{this.state.userInput}</p>
           <p>{this.state.userInput.length}</p>
           {charList}
         </div>
-        <button className="button" onClick={() => this.tooglePersonsHandler()}>
+        <button
+          className={classes.Button}
+          onClick={() => this.tooglePersonsHandler()}
+        >
           Show Persons
         </button>
         {persons}
