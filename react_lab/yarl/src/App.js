@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import "./App.css";
 import Person from "./Person/Person";
 import Validation from "./Validation/Validation";
@@ -57,14 +58,6 @@ class App extends Component {
   };
 
   render() {
-    const style = {
-      backgroundColor: "white",
-      font: "inherit",
-      border: "1px solid blue",
-      padding: "8px",
-      cursor: "pointer",
-    };
-
     let persons = null;
     if (this.state.showPersons) {
       persons = (
@@ -93,6 +86,14 @@ class App extends Component {
       );
     });
 
+    const classes = [];
+    if (this.state.persons.length <= 2) {
+      classes.push("red");
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push("bold");
+    }
+
     return (
       <div className="App">
         <div>
@@ -102,11 +103,12 @@ class App extends Component {
             value={this.state.userInput}
             onChange={this.inputChanged}
           />
+          <p className={classes.join(" ")}> This is really working </p>
           <p>{this.state.userInput}</p>
           <p>{this.state.userInput.length}</p>
           {charList}
         </div>
-        <button style={style} onClick={() => this.tooglePersonsHandler()}>
+        <button className="button" onClick={() => this.tooglePersonsHandler()}>
           Show Persons
         </button>
         {persons}
