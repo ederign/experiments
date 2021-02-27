@@ -13,8 +13,9 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "products",
       filename: "remoteEntry.js",
+      shared: ["faker"],
       exposes: {
-        "./ProductsIndex": "./src/index",
+        "./ProductsIndex": "./src/bootstrap",
       },
     }),
   ],
