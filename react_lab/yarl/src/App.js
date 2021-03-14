@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 import classes from "./App.css";
 import Person from "./Person/Person";
-import Validation from "./Validation/Validation";
-import Char from "./Char/Char";
-import ErrorBoundary from "./ErrorBoundary/ErrorBoundary";
 
 class App extends Component {
   state = {
@@ -15,19 +12,6 @@ class App extends Component {
     ],
     otherState: "some other value",
     showPersons: false,
-    userInput: "",
-  };
-
-  deletePersonHandler = (index) => {
-    const persons = [...this.state.persons];
-    persons.splice(index, 1);
-    this.setState({ persons: persons });
-  };
-
-  deleteCharHandler = (index) => {
-    const inputs = [...this.state.userInput.split("")];
-    inputs.splice(index, 1);
-    this.setState({ userInput: inputs.join("") });
   };
 
   nameChangedHandler = (event, id) => {
@@ -47,15 +31,15 @@ class App extends Component {
     });
   };
 
+  deletePersonHandler = (index) => {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({ persons: persons });
+  };
+
   tooglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
-  };
-
-  inputChanged = (e) => {
-    this.setState({
-      userInput: e.target.value,
-    });
   };
 
   render() {
@@ -65,28 +49,18 @@ class App extends Component {
         <div>
           {this.state.persons.map((p, index) => {
             return (
-              <ErrorBoundary key={p.id}>
-                <Person
-                  click={() => this.deletePersonHandler(index)}
-                  name={p.name}
-                  age={p.age}
-                  changed={(event) => this.nameChangedHandler(event, p.id)}
-                />
-              </ErrorBoundary>
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={p.name}
+                age={p.age}
+                key={p.id}
+                changed={(event) => this.nameChangedHandler(event, p.id)}
+              />
             );
           })}
         </div>
       );
     }
-    let charList = this.state.userInput.split("").map((c, index) => {
-      return (
-        <Char
-          click={() => this.deleteCharHandler(index)}
-          key={index}
-          letter={c}
-        />
-      );
-    });
 
     const assignedClasses = [];
     if (this.state.persons.length <= 2) {
@@ -99,16 +73,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
         <div>
-          <Validation inputLength={this.state.userInput.length} />
-          <input
-            type="text"
-            value={this.state.userInput}
-            onChange={this.inputChanged}
-          />
-          <p className={assignedClasses.join(" ")}> This is really working </p>
-          <p>{this.state.userInput}</p>
-          <p>{this.state.userInput.length}</p>
-          {charList}
+          <h1> Yo </h1>
         </div>
         <button
           className={classes.Button}
