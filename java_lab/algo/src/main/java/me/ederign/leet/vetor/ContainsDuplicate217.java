@@ -1,4 +1,4 @@
-package me.ederign;
+package me.ederign.leet.vetor;
 
 import java.util.HashSet;
 import java.util.Set;
