@@ -3,7 +3,6 @@ package me.ederign.leet.vector;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import me.ederign.leet.vetor.ContainsDuplicate217;
 import org.junit.Test;
 
 public class ContainsDuplicate217Test {
