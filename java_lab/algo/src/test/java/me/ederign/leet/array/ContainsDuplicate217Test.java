@@ -1,4 +1,4 @@
-package me.ederign.leet.vector;
+package me.ederign.leet.array;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
